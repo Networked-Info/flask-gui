@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<body bgcolor="white">
+<title>Search Results</title>
+<style>
+.sansserif {
+    font-family: "Times New Roman", Times, sans-serif;
+    font-weight: bold;
+}
+p.results {
+    color:grey;
+    line-height:20px;
+    height:60px;
+    overflow:hidden;
+    font-size:14px
+}
+p.cannotfind {
+    background-color:pink;
+    text-align:center;
+    border-left: 6px solid red;
+}
+.header {
+    background-color:black;
+    color:lightgrey;
+}
+.searchbox {
+    position:fixed;
+    top:0;
+    width:100%;
+    float:left;
+    background-color:white;
+    border-bottom: 2px dotted black;
+}
+.contents{
+    margin-top:280px;
+    padding:0;
+    clear:left;
+}
+</style>
+
+<div class="searchbox">
+<h3 class="header"> Wikipedia Film Search </h3>
+<form action="/results" name="search" method="post">
+<dl>
+    <dt>Search films
+    <dd><textarea rows="4" cols="100" name="query">{{text}}</textarea>
+    <dt>Optional
+    <dd>director:<input type="text" name="director">   starring:<input type="text" name="starring">   location:<input type="text" name="location">
+    <dd><input type="submit" value="Search">
+</dl>
+</form>
+
+<p style="font-size:14px">Find {{res_num}} results. This page shows the result from {{ 1+(page_num-1)*10 }} to {% if (10+(page_num-1)*10) > res_num %}{{res_num}}{% else %}{{ 10+(page_num-1)*10 }}{% endif %}</p>
+{% if page_num > 1 %}
+    <form action="/results/{{page_num-1}}" name="previouspage" method="get">
+    <input style="width:60px;float:left;clear:right" type="submit" value="Previous">
+    </form>
+{% endif %}
+{% if ((res_num/10)|round(0,'ceil')) > page_num %}
+    <form action="/results/{{page_num+1}}" name="nextpage" method="get">
+    <input style="width:60px;float:left" type="submit" value="Next">
+    </form>
+{% endif %}
+
+</div>
+
+<div class="contents">
+<p>
+    {% if stop_len %}
+        Ignoring term:
+        {% for stop in stops %}
+            {{ stop }}
+        {% endfor %}
+    {% endif%}
+</p>
+    {% if res_num %}
+        {% for res in results %}
+        <ul>
+            <pre class="sansserif"><a href="/documents/{{res[3]}}" target="_blank">  {{ res[1] }} </a>    score: {{res[0]}} </pre>
+            <form action="/morelikethis/{{res[3]}}" target="_blank" name="morelike" method="post">
+                <input type="submit" value="More Like This">
+            </form>
+            <p class="results">{{res[2]}}</p>
+        </ul>
+        {% endfor %}
+    {% else %}
+        <p class="cannotfind">{{results[0]}}</p>
+    {% endif %}  
+</div>
+</body>
+</html>

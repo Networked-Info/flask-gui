@@ -1,0 +1,20 @@
+<!doctype html>
+
+<body bgcolor="white">
+<title>My search page!</title>
+<div style="width:100%">
+<h3 style="background-color:black;color:lightgrey"> Wikipedia Film Search </h3>
+
+<h1>Welcome to Wikipedia 2016 film search page</h1>
+
+<p>Please input searching contents</p>
+<form action="/results" name="search" method="post">
+    <dl>
+        <dd><textarea rows="4" cols="50" name="query"></textarea>
+        <dt>Optional
+        <dd>director:<input type="text" name="director">   starring:<input type="text" name="starring">   location:<input type="text" name="location">
+        <dd><input type="submit" value="Search">
+    </dl>
+</form>
+</div>
+</body>

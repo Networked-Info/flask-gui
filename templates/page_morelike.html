@@ -1,0 +1,30 @@
+<!doctype html>
+
+<body bgcolor="white">
+<style>
+.header {
+    background-color:black;
+    color:lightgrey;
+}
+p.results {
+    color:grey;
+    line-height:20px;
+    height:60px;
+    overflow:hidden;
+    font-size:14px
+}
+</style>
+<title>MoreLike Results</title>
+<h3 class="header"> Wikipedia Film Search </h3>
+<h4 style="font-family: verdana;"> TOP 10 Morelike Results!! </h4>  
+
+<div class="film">
+    {% for res in results %}
+       <ul>
+            <pre class="sansserif"><a href="/documents/{{res[3]}}" target="_blank">  {{ res[1] }} </a>    score: {{res[0]}} </pre>
+            <p class="results">{{res[2]}}</p>
+        </ul>
+    {% endfor %}
+</div>
+
+</body>

@@ -1,0 +1,11 @@
+<!doctype html>
+
+<body bgcolor="white">
+
+<div class="film">
+    {% for term in film %}
+        <pre><strong>{{term}}</strong>: {{film[term]}}</pre>
+    {% endfor %}
+</div>
+
+</body>
